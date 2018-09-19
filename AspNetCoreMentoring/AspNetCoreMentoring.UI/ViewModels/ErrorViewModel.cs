@@ -1,6 +1,6 @@
 using System;
 
-namespace AspNetCoreMentoring.UI.Models
+namespace AspNetCoreMentoring.UI.ViewModels
 {
     public class ErrorViewModel
     {

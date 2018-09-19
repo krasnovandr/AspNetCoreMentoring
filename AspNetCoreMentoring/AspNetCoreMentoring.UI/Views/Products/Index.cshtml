@@ -1,1 +1,38 @@
-﻿
+﻿@model IEnumerable<ProductViewModel>
+<div class="row">
+    <div class="col-md-8">
+        <table class="table table-bordered">
+            <thead>
+                   <tr>
+                       <th >ProductId</th>
+                       <th>ProductName</th>
+                       <th>QuantityPerUnit</th>
+                       <th>UnitPrice</th>
+                       <th>UnitsInStock</th>
+                       <th>UnitsOnOrder</th>
+                       <th>ReorderLevel</th>
+                       <th>Discontinued</th>
+                       <th>CategoryName</th>
+                       <th>SupplierName</th>
+                   </tr>
+
+            </thead>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>   @Html.DisplayFor(modelItem => product.ProductId)</td>
+                    <td>   @Html.DisplayFor(modelItem => product.ProductName)</td>
+                    <td>   @Html.DisplayFor(modelItem => product.QuantityPerUnit)</td>
+                    <td>   @Html.DisplayFor(modelItem => product.UnitPrice)</td>
+                    <td>   @Html.DisplayFor(modelItem => product.UnitsInStock)</td>
+                    <td>   @Html.DisplayFor(modelItem => product.UnitsOnOrder)</td>
+                    <td>   @Html.DisplayFor(modelItem => product.ReorderLevel)</td>
+                    <td>   @Html.DisplayFor(modelItem => product.Discontinued)</td>
+                    <td>   @Html.DisplayFor(modelItem => product.CategoryName)</td>
+                    <td>   @Html.DisplayFor(modelItem => product.SupplierName)</td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

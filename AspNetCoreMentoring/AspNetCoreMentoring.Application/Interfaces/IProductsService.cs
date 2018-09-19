@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using AspNetCoreMentoring.Core.Contracts;
+using System.Threading.Tasks;
+using AspNetCoreMentoring.Infrastructure.EfEntities;
 
 namespace AspNetCoreMentoring.Core.Interfaces
 {
-    interface IProductsService
+    public interface IProductsService
     {
-        IEnumerable<Product> GetProducts();
+        Task<IEnumerable<Products>> GetProductsAsync();
     }
 }

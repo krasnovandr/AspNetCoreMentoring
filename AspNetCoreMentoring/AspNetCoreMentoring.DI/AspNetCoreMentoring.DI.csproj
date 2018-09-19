@@ -5,11 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\AspNetCoreMentoring.Application\AspNetCoreMentoring.Core.csproj" />
     <ProjectReference Include="..\AspNetCoreMentoring.Persistance\AspNetCoreMentoring.Infrastructure.csproj" />
   </ItemGroup>
 

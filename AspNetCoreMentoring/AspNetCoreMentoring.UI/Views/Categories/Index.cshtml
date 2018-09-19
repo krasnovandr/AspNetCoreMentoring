@@ -1,0 +1,24 @@
+﻿@model IEnumerable<CategoryViewModel>
+<div class="row">
+    <div class="col-md-8">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>CategoryId</th>
+                    <th>CategoryName</th>
+                    <th>Description</th>
+                </tr>
+
+            </thead>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>   @Html.DisplayFor(modelItem => product.CategoryId)</td>
+                    <td>   @Html.DisplayFor(modelItem => product.CategoryName)</td>
+                    <td>   @Html.DisplayFor(modelItem => product.Description)</td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
