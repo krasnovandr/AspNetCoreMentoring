@@ -6,38 +6,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreMentoring.UI.ViewModels.Category;
+using AutoMapper;
 
 namespace AspNetCoreMentoring.UI.Controllers
 {
     public class CategoriesController : Controller
     {
         private readonly ICategoriesService _categoriesService;
-
-        public CategoriesController(ICategoriesService categoriesService)
+        private readonly IMapper _mapper;
+        public CategoriesController(
+            ICategoriesService categoriesService,
+            IMapper mapper)
         {
             _categoriesService = categoriesService;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
             var categories = await _categoriesService.GetCategoriesAsync();
 
-            IEnumerable<CategoryViewModel> result = MapCategoriesToViewModel(categories);
+            var result = _mapper.Map<IEnumerable<CategoryReadListViewModel>>(categories);
 
             return View(result);
-        }
-
-        private IEnumerable<CategoryViewModel> MapCategoriesToViewModel(IEnumerable<Categories> categories)
-        {
-            return categories.Select(category =>
-            {
-                return new CategoryViewModel
-                {
-                    CategoryId = category.CategoryId,
-                    CategoryName = category.CategoryName,
-                    Description = category.Description,
-                };
-            });
-
         }
     }
 }

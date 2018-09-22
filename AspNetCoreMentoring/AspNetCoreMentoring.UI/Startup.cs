@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreMentoring.DI;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,7 @@ namespace AspNetCoreMentoring.UI
             services.InstallInfrastractureDependencies(Configuration);
             services.InstallApplicationDependencies(Configuration);
 
+            services.AddAutoMapper();
             services.AddMvc();
         }
 

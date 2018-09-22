@@ -68,12 +68,12 @@ namespace AspNetCoreMentoring.Infrastructure
                 query = query.Where(filter);
             }
 
-            if (page.HasValue && page != 0)
+            if (page.HasValue && page != 0 && pageSize.HasValue)
             {
                 query = query.Skip(((int)page - 1) * (int)pageSize);
             }
 
-            if (pageSize != null)
+            if (pageSize.HasValue && pageSize != 0 )
             {
                 query = query.Take((int)pageSize);
             }

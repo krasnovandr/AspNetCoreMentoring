@@ -1,0 +1,91 @@
+﻿@model AspNetCoreMentoring.UI.ViewModels.Product.ProductWriteItemViewModel
+
+<div style="display: none;">@Html.EditorFor(model => model.Suppliers)</div>
+<div style="display: none;">@Html.EditorFor(model => model.Categories)</div>
+<div class="row">
+    <div class="col-md-8">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="ProductName" class="col-md-2 control-label"></label>
+            <div class="col-md-7">
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Discontinued" class="col-md-2 control-label"></label>
+            <div class="col-md-7">
+                <input asp-for="Discontinued" />
+                <span asp-validation-for="Discontinued" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="QuantityPerUnit" class="col-md-2 control-label"></label>
+            <div class="col-md-7">
+                <input asp-for="QuantityPerUnit" class="form-control" />
+                <span asp-validation-for="QuantityPerUnit" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ReorderLevel" class="col-md-2 control-label"></label>
+            <div class="col-md-7">
+                <input asp-for="ReorderLevel" class="form-control" />
+                <span asp-validation-for="ReorderLevel" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="UnitPrice" class="col-md-2 control-label"></label>
+            <div class="col-md-7">
+                <input asp-for="UnitPrice" class="form-control" />
+                <span asp-validation-for="UnitPrice" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="UnitsOnOrder" class="col-md-2 control-label"></label>
+            <div class="col-md-7">
+                <input asp-for="UnitsOnOrder" class="form-control" />
+                <span asp-validation-for="UnitsOnOrder" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="UnitsInStock" class="col-md-2 control-label"></label>
+            <div class="col-md-7">
+                <input asp-for="UnitsInStock" class="form-control" />
+                <span asp-validation-for="UnitsInStock" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Categories" class="col-md-2 control-label"></label>
+            <div class="col-md-7">
+                <select asp-for="SelectedCategoryId"
+                        asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))">
+                    <option>Please select Category</option>
+                </select>
+                <span asp-validation-for="SelectedCategoryId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Suppliers" class="col-md-2 control-label"></label>
+            <div class="col-md-7">
+                <select asp-for="SelectedSupplierId"
+                        asp-items="@(new SelectList(Model.Suppliers, "SupplierId", "CompanyName"))">
+                    <option>Please select Supplier</option>
+                </select>
+                <span asp-validation-for="SelectedSupplierId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div><a asp-area="" asp-controller="Products" asp-action="Index">Back to products</a></div>
+    <div><button type="submit" class="btn btn-success">Submit</button></div>
+</div>

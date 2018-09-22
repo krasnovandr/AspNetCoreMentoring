@@ -13,13 +13,10 @@ namespace AspNetCoreMentoring.DI
     {
         public static void InstallApplicationDependencies(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IProductsService, ProductsService>(options =>
-            {
-                int maxProducts = Convert.ToInt32(configuration["MaxProductCount"]);
-                return new ProductsService(options.GetRequiredService<IGenericRepository<Products>>(), maxProducts);
-            });
+            services.AddScoped<IProductsService, ProductsService>();
 
             services.AddScoped<ICategoriesService, CategoriesService>();
+            services.AddScoped<ISupplierService, SuppliersService>();
         }
 
         public static void InstallInfrastractureDependencies(this IServiceCollection services, IConfiguration configuration)
