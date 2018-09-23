@@ -2,6 +2,9 @@
 
 <div style="display: none;">@Html.EditorFor(model => model.Suppliers)</div>
 <div style="display: none;">@Html.EditorFor(model => model.Categories)</div>
+
+
+
 <div class="row">
     <div class="col-md-8">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -16,11 +19,15 @@
         <div class="form-group">
             <label asp-for="Discontinued" class="col-md-2 control-label"></label>
             <div class="col-md-7">
-                <input asp-for="Discontinued" />
+                <div class="custom-control custom-checkbox">
+                    <input asp-for="Discontinued" class="custom-control-input" id="customCheck1"/>
+                    <label class="custom-control-label" for="customCheck1"></label>
+                </div>
+               
                 <span asp-validation-for="Discontinued" class="text-danger"></span>
             </div>
         </div>
-
+     
         <div class="form-group">
             <label asp-for="QuantityPerUnit" class="col-md-2 control-label"></label>
             <div class="col-md-7">
@@ -66,7 +73,7 @@
         <div class="form-group">
             <label asp-for="Categories" class="col-md-2 control-label"></label>
             <div class="col-md-7">
-                <select asp-for="SelectedCategoryId"
+                <select class="form-control" asp-for="SelectedCategoryId"
                         asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))">
                     <option>Please select Category</option>
                 </select>
@@ -76,16 +83,19 @@
         <div class="form-group">
             <label asp-for="Suppliers" class="col-md-2 control-label"></label>
             <div class="col-md-7">
-                <select asp-for="SelectedSupplierId"
+                <select class="form-control" asp-for="SelectedSupplierId"
                         asp-items="@(new SelectList(Model.Suppliers, "SupplierId", "CompanyName"))">
                     <option>Please select Supplier</option>
                 </select>
                 <span asp-validation-for="SelectedSupplierId" class="text-danger"></span>
             </div>
         </div>
+     
     </div>
 </div>
 <div class="row">
-    <div><a asp-area="" asp-controller="Products" asp-action="Index">Back to products</a></div>
-    <div><button type="submit" class="btn btn-success">Submit</button></div>
+    <div class="col-md-5">
+        <button type="submit" class="btn btn-success">Submit</button>
+    </div>
 </div>
+

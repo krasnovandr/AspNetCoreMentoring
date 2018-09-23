@@ -3,8 +3,9 @@
 
 
 <form asp-action="CreateProduct" class="form-horizontal">
-    <h2>CreateProduct</h2>
+    <h2>Create New Product</h2>
+    <div><a asp-area="" asp-controller="Products" asp-action="Index">Back to products</a></div>
     <hr />
-    <partial name="ProductForm"/>
-   
+    <partial name="ProductForm" />
+
 </form>

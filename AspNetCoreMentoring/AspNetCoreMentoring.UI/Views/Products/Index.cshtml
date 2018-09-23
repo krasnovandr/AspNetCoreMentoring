@@ -6,10 +6,10 @@
 </p>
 <div class="row">
     <div class="col-md-8">
-        <table class="table table-bordered">
-            <thead>
+        <table class="table table-hover">
+            <thead class="thead-dark">
                 <tr>
-                    <th>ProductId</th>
+                    <th scope="col">ProductId</th>
                     <th>ProductName</th>
                     <th>QuantityPerUnit</th>
                     <th>UnitPrice</th>
@@ -25,6 +25,7 @@
             @foreach (var product in Model)
             {
                 <tr>
+
                     <td> @Html.DisplayFor(modelItem => product.ProductId)</td>
                     <td>
                         <a asp-area=""
