@@ -10,21 +10,27 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace AspNetCoreMentoring.UI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, ILogger<Startup> eventLogger)
         {
             Configuration = configuration;
+            Logger = eventLogger;
         }
 
         public IConfiguration Configuration { get; }
+        public ILogger<Startup> Logger { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Logger.LogInformation("Current Connection string {0}", Configuration.GetConnectionString("NorthwindConnection"));
+
             services.InstallInfrastractureDependencies(Configuration);
             services.InstallApplicationDependencies(Configuration);
 
@@ -33,7 +39,11 @@ namespace AspNetCoreMentoring.UI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IHostingEnvironment env,
+            IApplicationLifetime applicationLifetime,
+            ILogger<Startup> eventLogger)
         {
             if (env.IsDevelopment())
             {
@@ -44,6 +54,9 @@ namespace AspNetCoreMentoring.UI
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            applicationLifetime.ApplicationStarted.Register(() => eventLogger.LogInformation("Custom Log AppStarted with path {0}", env.ContentRootPath));
+            applicationLifetime.ApplicationStopping.Register(() => eventLogger.LogInformation("Custom Log AppStopped"));
 
             app.UseStaticFiles();
 

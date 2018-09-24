@@ -12,6 +12,8 @@ using AspNetCoreMentoring.UI.ViewModels.Category;
 using AspNetCoreMentoring.UI.ViewModels.Product;
 using AspNetCoreMentoring.UI.ViewModels.Supplier;
 using AutoMapper;
+using Serilog;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,18 +26,21 @@ namespace AspNetCoreMentoring.UI.Controllers
         private readonly ISupplierService _supplierService;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly ILogger<ProductsController> _logger;
         public ProductsController(
             IProductsService productsService,
             ICategoriesService categoriesService,
             ISupplierService supplierService,
             IConfiguration configuration,
-            IMapper mapper)
+            IMapper mapper,
+            ILogger<ProductsController> logger)
         {
             _productsService = productsService;
             _supplierService = supplierService;
             _categoriesService = categoriesService;
             _configuration = configuration;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<IActionResult> EditProduct(int id)
@@ -45,7 +50,7 @@ namespace AspNetCoreMentoring.UI.Controllers
 
             await FillSelectLists(model);
 
-            return View( model);
+            return View(model);
         }
 
         [HttpPost]
@@ -104,6 +109,7 @@ namespace AspNetCoreMentoring.UI.Controllers
         // GET: /<controller>/
         public async Task<IActionResult> Index()
         {
+            _logger.LogInformation("Max product count from config {0}", _configuration["MaxProductCount"]);
             var itemsPerPage = Convert.ToInt32(_configuration["MaxProductCount"]);
 
             var products = await _productsService.GetProductsAsync(0, itemsPerPage);
@@ -116,7 +122,7 @@ namespace AspNetCoreMentoring.UI.Controllers
         private async Task FillSelectLists(ProductWriteItemViewModel model)
         {
             var categories = await _categoriesService.GetCategoriesAsync();
-        
+
             if (categories != null)
             {
                 model.Categories = _mapper.Map<IEnumerable<CategoryItemViewModel>>(categories);
