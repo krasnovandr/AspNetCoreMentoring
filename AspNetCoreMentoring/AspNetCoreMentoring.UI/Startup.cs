@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using AspNetCoreMentoring.DI;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -11,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-using Serilog;
 
 namespace AspNetCoreMentoring.UI
 {
@@ -45,6 +40,8 @@ namespace AspNetCoreMentoring.UI
             IApplicationLifetime applicationLifetime,
             ILogger<Startup> eventLogger)
         {
+
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
@@ -52,7 +49,7 @@ namespace AspNetCoreMentoring.UI
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
             }
 
             applicationLifetime.ApplicationStarted.Register(() => eventLogger.LogInformation("Custom Log AppStarted with path {0}", env.ContentRootPath));
@@ -68,7 +65,6 @@ namespace AspNetCoreMentoring.UI
                 RequestPath = "/node_modules",
                 EnableDirectoryBrowsing = false
             });
-
 
             app.UseMvc(routes =>
             {

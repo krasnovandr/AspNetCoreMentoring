@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AspNetCoreMentoring.UI.ViewModels;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace AspNetCoreMentoring.UI.Controllers
 {
@@ -13,11 +15,6 @@ namespace AspNetCoreMentoring.UI.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
