@@ -25,6 +25,9 @@ namespace AspNetCoreMentoring.UI.Mapping
                 .ForMember(dest => dest.SelectedCategoryId, opt => opt.MapFrom(src => src.CategoryId))
                 .ForMember(dest => dest.SelectedSupplierId, opt => opt.MapFrom(src => src.SupplierId));
 
+            this.CreateMap<ProductWriteItemViewModel,Products >()
+              .ForMember(dest => dest.SupplierId, opt => opt.MapFrom(src => src.SelectedSupplierId))
+              .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.SelectedCategoryId));
         }
     }
 }

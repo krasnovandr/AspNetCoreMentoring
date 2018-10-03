@@ -20,11 +20,12 @@
             <label asp-for="Discontinued" class="col-md-2 control-label"></label>
             <div class="col-md-7">
                 <div class="custom-control custom-checkbox">
-                    <input asp-for="Discontinued" class="custom-control-input" id="customCheck1"/>
+                    <input asp-for="Discontinued" class="custom-control-input" id="customCheck1" />
                     <label class="custom-control-label" for="customCheck1"></label>
+                    <span asp-validation-for="Discontinued" class="text-danger"></span>
+
                 </div>
                
-                <span asp-validation-for="Discontinued" class="text-danger"></span>
             </div>
         </div>
      
@@ -48,7 +49,7 @@
         <div class="form-group">
             <label asp-for="UnitPrice" class="col-md-2 control-label"></label>
             <div class="col-md-7">
-                <input asp-for="UnitPrice" class="form-control" />
+                <input asp-for="UnitPrice" class="form-control"/>
                 <span asp-validation-for="UnitPrice" class="text-danger"></span>
             </div>
         </div>

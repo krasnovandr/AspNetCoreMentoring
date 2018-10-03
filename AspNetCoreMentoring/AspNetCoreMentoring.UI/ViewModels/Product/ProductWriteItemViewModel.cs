@@ -11,9 +11,10 @@ namespace AspNetCoreMentoring.UI.ViewModels.Product
         public int ProductId { get; set; }
 
         [Required(ErrorMessage = "Product Name is required")]
-        [StringLength(100, MinimumLength = 5)]
+        [StringLength(100, MinimumLength = 3)]
         public string ProductName { get; set; }
         public string QuantityPerUnit { get; set; }
+
         public decimal? UnitPrice { get; set; }
         public short? UnitsInStock { get; set; }
         public short? UnitsOnOrder { get; set; }

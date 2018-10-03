@@ -1,9 +1,6 @@
-﻿using AspNetCoreMentoring.UI.ViewModels;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using AspNetCoreMentoring.Core.Interfaces;
@@ -12,10 +9,8 @@ using AspNetCoreMentoring.UI.ViewModels.Category;
 using AspNetCoreMentoring.UI.ViewModels.Product;
 using AspNetCoreMentoring.UI.ViewModels.Supplier;
 using AutoMapper;
-using Serilog;
 using Microsoft.Extensions.Logging;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AspNetCoreMentoring.UI.Controllers
 {
@@ -27,6 +22,7 @@ namespace AspNetCoreMentoring.UI.Controllers
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly ILogger<ProductsController> _logger;
+
         public ProductsController(
             IProductsService productsService,
             ICategoriesService categoriesService,
@@ -58,11 +54,12 @@ namespace AspNetCoreMentoring.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Products product = MapViewModelToProduct(createModel);
+                Products product = _mapper.Map<Products>(createModel);
                 await _productsService.UpdateProduct(product);
                 return RedirectToAction("Index");
             }
 
+            await FillSelectLists(createModel);
             return View(createModel);
         }
 
@@ -80,7 +77,7 @@ namespace AspNetCoreMentoring.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Products product = MapViewModelToProduct(createModel);
+                Products product = _mapper.Map<Products>(createModel);
                 await _productsService.CreateProduct(product);
                 return RedirectToAction("Index");
             }
@@ -88,28 +85,10 @@ namespace AspNetCoreMentoring.UI.Controllers
             return View("CreateProduct", createModel);
         }
 
-        private Products MapViewModelToProduct(ProductWriteItemViewModel createModel)
-        {
-            return new Products
-            {
-                ProductName = createModel.ProductName,
-                UnitPrice = createModel.UnitPrice,
-                QuantityPerUnit = createModel.QuantityPerUnit,
-                Discontinued = createModel.Discontinued,
-                UnitsInStock = createModel.UnitsInStock,
-                UnitsOnOrder = createModel.UnitsOnOrder,
-                ReorderLevel = createModel.UnitsOnOrder,
-                SupplierId = createModel.SelectedSupplierId,
-                CategoryId = createModel.SelectedCategoryId,
-                ProductId = createModel.ProductId
-
-            };
-        }
-
-        // GET: /<controller>/
         public async Task<IActionResult> Index()
         {
             _logger.LogInformation("Max product count from config {0}", _configuration["MaxProductCount"]);
+
             var itemsPerPage = Convert.ToInt32(_configuration["MaxProductCount"]);
 
             var products = await _productsService.GetProductsAsync(0, itemsPerPage);
