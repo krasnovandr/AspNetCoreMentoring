@@ -39,9 +39,22 @@ namespace AspNetCoreMentoring.UI.Controllers
             _logger = logger;
         }
 
+        public async Task<IActionResult> Index(int pageNumber = 0)
+        {
+            var itemsPerPage = Convert.ToInt32(_configuration["MaxProductCount"]);
+
+            _logger.LogInformation("Max product count from config {0}", itemsPerPage);
+
+            var products = await _productsService.GetProductsAsync(pageNumber, itemsPerPage);
+
+            var result = _mapper.Map<IEnumerable<ProductReadListViewModel>>(products);
+
+            return View(result);
+        }
+
         public async Task<IActionResult> EditProduct(int id)
         {
-            var existingProduct = await _productsService.GetProduct(id);
+            var existingProduct = await _productsService.GetProductAsync(id);
             var model = _mapper.Map<ProductWriteItemViewModel>(existingProduct);
 
             await FillSelectLists(model);
@@ -55,14 +68,13 @@ namespace AspNetCoreMentoring.UI.Controllers
             if (ModelState.IsValid)
             {
                 Products product = _mapper.Map<Products>(createModel);
-                await _productsService.UpdateProduct(product);
+                await _productsService.UpdateProductAsync(product);
                 return RedirectToAction("Index");
             }
 
             await FillSelectLists(createModel);
             return View(createModel);
         }
-
 
         public async Task<IActionResult> CreateProduct()
         {
@@ -78,24 +90,11 @@ namespace AspNetCoreMentoring.UI.Controllers
             if (ModelState.IsValid)
             {
                 Products product = _mapper.Map<Products>(createModel);
-                await _productsService.CreateProduct(product);
+                await _productsService.CreateProductAsync(product);
                 return RedirectToAction("Index");
             }
             await FillSelectLists(createModel);
             return View("CreateProduct", createModel);
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            _logger.LogInformation("Max product count from config {0}", _configuration["MaxProductCount"]);
-
-            var itemsPerPage = Convert.ToInt32(_configuration["MaxProductCount"]);
-
-            var products = await _productsService.GetProductsAsync(0, itemsPerPage);
-
-            var result = _mapper.Map<IEnumerable<ProductReadListViewModel>>(products);
-
-            return View(result);
         }
 
         private async Task FillSelectLists(ProductWriteItemViewModel model)

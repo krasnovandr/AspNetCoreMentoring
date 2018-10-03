@@ -16,12 +16,12 @@ namespace AspNetCoreMentoring.Core.Services
             _productsRepository = productsRepository;
         }
 
-        public async Task CreateProduct(Products product)
+        public async Task CreateProductAsync(Products product)
         {
             await _productsRepository.CreateAsync(product);
         }
 
-        public async Task<Products> GetProduct(int productId)
+        public async Task<Products> GetProductAsync(int productId)
         {
             return await _productsRepository.FindById(productId);
         }
@@ -35,7 +35,7 @@ namespace AspNetCoreMentoring.Core.Services
                 pr => pr.Supplier, pr => pr.Category);
         }
 
-        public async Task UpdateProduct(Products product)
+        public async Task UpdateProductAsync(Products product)
         {
             await _productsRepository.UpdateAsync(product);
         }

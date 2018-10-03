@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.Core", 
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AspNetCoreMentoring.Database", "AspNetCoreMentoring.Database\AspNetCoreMentoring.Database.sqlproj", "{E1ECE1AC-774D-4DDC-8AB1-245FFA391049}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreMentoring.DI", "AspNetCoreMentoring.DI\AspNetCoreMentoring.DI.csproj", "{FB6390BB-207F-4E37-A8FA-9A43BC626A83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.DI", "AspNetCoreMentoring.DI\AspNetCoreMentoring.DI.csproj", "{FB6390BB-207F-4E37-A8FA-9A43BC626A83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreMentoring.Tests", "AspNetCoreMentoring.Tests\AspNetCoreMentoring.Tests.csproj", "{4D5BE5BD-B1E1-47DA-BF46-F42B0471E067}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{FB6390BB-207F-4E37-A8FA-9A43BC626A83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB6390BB-207F-4E37-A8FA-9A43BC626A83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB6390BB-207F-4E37-A8FA-9A43BC626A83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D5BE5BD-B1E1-47DA-BF46-F42B0471E067}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D5BE5BD-B1E1-47DA-BF46-F42B0471E067}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D5BE5BD-B1E1-47DA-BF46-F42B0471E067}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D5BE5BD-B1E1-47DA-BF46-F42B0471E067}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

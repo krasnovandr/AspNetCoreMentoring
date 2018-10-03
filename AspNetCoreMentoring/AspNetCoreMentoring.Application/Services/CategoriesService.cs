@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AspNetCoreMentoring.Core.Interfaces;
 using AspNetCoreMentoring.Infrastructure;
@@ -12,7 +13,7 @@ namespace AspNetCoreMentoring.Core.Services
 
         public CategoriesService(IGenericRepository<Categories> categoriesRepository)
         {
-            _categoriesRepository = categoriesRepository;
+            _categoriesRepository = categoriesRepository ?? throw new ArgumentNullException(nameof(categoriesRepository));
         }
 
         public async Task<IEnumerable<Categories>> GetCategoriesAsync()
