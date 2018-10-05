@@ -32,6 +32,8 @@ namespace AspNetCoreMentoring.UI.Controllers
             return View(result);
         }
 
+        [HttpGet("images/{id}")]
+        [HttpGet("[controller]/[action]/{id}")]
         public async Task<IActionResult> CategoryImage(int id)
         {
             var category = await _categoriesService.GetCategoryAsync(id);
