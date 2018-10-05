@@ -27,7 +27,7 @@ namespace AspNetCoreMentoring.Infrastructure
         {
             return await _dbSet.AsNoTracking().Where(match).ToListAsync();
         }
-        public async Task<TEntity> FindById(int id)
+        public async Task<TEntity> FindByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }

@@ -81,6 +81,45 @@ namespace AspNetCoreMentoring.Tests
         }
 
 
+        [Fact]
+        public async Task CreateProduct_ShouldReturnAllProducts_ReturnsAllProducts()
+        {
+            var expectedProducts = GetTestProducts(10);
+            _productsService.Setup(service => service.GetProductsAsync(It.IsAny<int>(), It.IsAny<int>()))
+                .ReturnsAsync(expectedProducts);
+
+            _configuration.SetupGet(x => x[It.IsAny<string>()]).Returns("0");
+
+            var controller = new ProductsController(
+                _productsService.Object,
+                _categoriesService.Object,
+                _supplierService.Object,
+                _configuration.Object,
+                _mapper,
+                _logger.Object);
+
+            // Act
+            var result = await controller.CreateProduct();
+
+            // Assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+
+            var model = Assert.IsAssignableFrom<IEnumerable<ProductReadListViewModel>>(
+                viewResult.ViewData.Model);
+
+            Assert.Equal(expectedProducts.Count(), model.Count());
+            Assert.Equal(expectedProducts.Select(v => v.ProductId), model.Select(v => v.ProductId));
+            Assert.Equal(expectedProducts.Select(v => v.Discontinued), model.Select(v => v.Discontinued));
+            Assert.Equal(expectedProducts.Select(v => v.ProductName), model.Select(v => v.ProductName));
+            Assert.Equal(expectedProducts.Select(v => v.QuantityPerUnit), model.Select(v => v.QuantityPerUnit));
+            Assert.Equal(expectedProducts.Select(v => v.ReorderLevel), model.Select(v => v.ReorderLevel));
+            Assert.Equal(expectedProducts.Select(v => v.Supplier.CompanyName), model.Select(v => v.SupplierName));
+            Assert.Equal(expectedProducts.Select(v => v.Category.CategoryName), model.Select(v => v.CategoryName));
+            Assert.Equal(expectedProducts.Select(v => v.UnitPrice), model.Select(v => v.UnitPrice));
+            Assert.Equal(expectedProducts.Select(v => v.UnitsInStock), model.Select(v => v.UnitsInStock));
+            Assert.Equal(expectedProducts.Select(v => v.UnitsOnOrder), model.Select(v => v.UnitsOnOrder));
+        }
+
         private IEnumerable<Products> GetTestProducts(int count)
         {
             Fixture fixture = new Fixture();

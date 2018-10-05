@@ -7,15 +7,32 @@
                     <th>CategoryId</th>
                     <th>CategoryName</th>
                     <th>Description</th>
+                    <th>Category Image</th>
                 </tr>
 
             </thead>
-            @foreach (var product in Model)
+            @foreach (var category in Model)
             {
                 <tr>
-                    <td>   @Html.DisplayFor(modelItem => product.CategoryId)</td>
-                    <td>   @Html.DisplayFor(modelItem => product.CategoryName)</td>
-                    <td>   @Html.DisplayFor(modelItem => product.Description)</td>
+                    <td>   @Html.DisplayFor(modelItem => category.CategoryId)</td>
+                    <td>
+                        <a asp-area=""
+                           asp-controller="Categories"
+                           asp-action="EditCategory"
+                           asp-route-id="@category.CategoryId">
+                            @Html.DisplayFor(modelItem => category.CategoryName)
+                        </a>
+
+                    </td>
+                    <td>   @Html.DisplayFor(modelItem => category.Description)</td>
+                    <td>
+                        <a asp-area=""
+                           asp-controller="Categories"
+                           asp-action="CategoryImage"
+                           asp-route-id="@category.CategoryId">
+                            Image
+                        </a>
+                    </td>
                 </tr>
             }
 

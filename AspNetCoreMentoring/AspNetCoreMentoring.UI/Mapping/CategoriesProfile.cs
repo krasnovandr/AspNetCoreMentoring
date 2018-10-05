@@ -9,7 +9,13 @@ namespace AspNetCoreMentoring.UI.Mapping
         public CategoriesProfile()
         {
             this.CreateMap<Categories, CategoryReadListViewModel>();
-            this.CreateMap<Categories, CategoryItemViewModel>();
+            this.CreateMap<Categories, CategoryWriteItemViewModel>();
+
+
+            this.CreateMap<CategoryWriteItemViewModel, Categories>();
+
+
+
 
         }
     }

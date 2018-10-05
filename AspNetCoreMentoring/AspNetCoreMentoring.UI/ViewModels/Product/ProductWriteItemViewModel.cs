@@ -24,7 +24,7 @@ namespace AspNetCoreMentoring.UI.ViewModels.Product
         public bool Discontinued { get; set; }
 
         public IEnumerable<SupplierItemViewModel> Suppliers { get; set; }
-        public IEnumerable<CategoryItemViewModel> Categories { get; set; }
+        public IEnumerable<CategoryWriteItemViewModel> Categories { get; set; }
 
         [Required]
         public int? SelectedCategoryId { get; set; }

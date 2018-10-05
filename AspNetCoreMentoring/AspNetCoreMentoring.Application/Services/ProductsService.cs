@@ -23,7 +23,7 @@ namespace AspNetCoreMentoring.Core.Services
 
         public async Task<Products> GetProductAsync(int productId)
         {
-            return await _productsRepository.FindById(productId);
+            return await _productsRepository.FindByIdAsync(productId);
         }
 
         public async Task<IEnumerable<Products>> GetProductsAsync(int page, int itemsPerPage)

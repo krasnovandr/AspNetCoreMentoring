@@ -1,0 +1,54 @@
+﻿@model AspNetCoreMentoring.UI.ViewModels.Category.CategoryWriteItemViewModel
+
+<h2>EditCategory</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="EditCategory">
+            @Html.HiddenFor(v => v.CategoryId)
+            @Html.HiddenFor(v => v.Picture)
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CategoryName" class="control-label"></label>
+                <input asp-for="CategoryName" class="form-control" />
+                <span asp-validation-for="CategoryName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-5">
+        Current Category Image
+        <div class="form-group">
+            <img src="data:image;base64,@Convert.ToBase64String(Model.Picture)"  class="img-fluid"/>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" asp-controller="Categories" asp-action="UploadCategoryImage">
+            @Html.HiddenFor(v => v.CategoryId)
+            <div class="form-group">
+                <div class="col-md-10">
+                    <label for="formControlFile">Upload file using this form:</label>
+                    <input type="file" name="CategoryImage" class="form-control-file"  id="formControlFile"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="submit" value="Upload" class="btn btn-success" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

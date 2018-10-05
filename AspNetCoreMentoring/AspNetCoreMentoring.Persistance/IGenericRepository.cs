@@ -10,7 +10,7 @@ namespace AspNetCoreMentoring.Infrastructure
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<IEnumerable<T>> FindByAsync(Expression<Func<T, bool>> predicate);
-        Task<T> FindById(int id);
+        Task<T> FindByIdAsync(int id);
         Task CreateAsync(T entity);
         Task DeleteAsync(T entity);
         Task UpdateAsync(T entity);

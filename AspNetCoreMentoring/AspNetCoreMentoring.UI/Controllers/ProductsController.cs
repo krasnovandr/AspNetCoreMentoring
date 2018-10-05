@@ -103,7 +103,7 @@ namespace AspNetCoreMentoring.UI.Controllers
 
             if (categories != null)
             {
-                model.Categories = _mapper.Map<IEnumerable<CategoryItemViewModel>>(categories);
+                model.Categories = _mapper.Map<IEnumerable<CategoryWriteItemViewModel>>(categories);
             }
 
             var suppliers = await _supplierService.GetSuppliersAsync();
