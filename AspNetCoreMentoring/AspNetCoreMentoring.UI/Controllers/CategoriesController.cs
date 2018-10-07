@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using AspNetCoreMentoring.UI.ViewModels.Category;
 using AutoMapper;
 using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AspNetCoreMentoring.UI.Controllers
 {
@@ -43,7 +44,7 @@ namespace AspNetCoreMentoring.UI.Controllers
                 return NotFound();
             }
 
-            return File(category.Picture, "image/png");
+            return File(category.Picture, Image.Jpeg);
         }
 
         public async Task<IActionResult> EditCategory(int id)

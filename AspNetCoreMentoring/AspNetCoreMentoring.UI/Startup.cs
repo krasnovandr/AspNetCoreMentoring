@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using AspNetCoreMentoring.DI;
+using AspNetCoreMentoring.UI.Middleware;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -66,12 +67,21 @@ namespace AspNetCoreMentoring.UI
                 EnableDirectoryBrowsing = false
             });
 
+            app.UseImageCachingMiddleware(new CachingOptions
+            {
+                CacheDirectory = "CachedImages",
+                CacheDuration = new System.TimeSpan(1,0,0),
+                MaxImages = 10
+            });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+
         }
     }
 }
