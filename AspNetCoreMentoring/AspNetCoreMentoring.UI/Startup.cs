@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using AspNetCoreMentoring.DI;
+using AspNetCoreMentoring.UI.Filters;
 using AspNetCoreMentoring.UI.Middleware;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -13,14 +14,16 @@ namespace AspNetCoreMentoring.UI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, ILogger<Startup> eventLogger)
+        public Startup(IConfiguration configuration, ILogger<Startup> eventLogger, ILoggerFactory loggerFactory)
         {
             Configuration = configuration;
             Logger = eventLogger;
+            LoggerFactory = loggerFactory;
         }
 
         public IConfiguration Configuration { get; }
         public ILogger<Startup> Logger { get; }
+        public ILoggerFactory LoggerFactory { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -33,15 +36,23 @@ namespace AspNetCoreMentoring.UI
             services.AddSingleton<IImageCacheHelper, ImageCacheHelper>();
 
             services.AddAutoMapper();
-            services.AddMvc();
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new ActionExecutionLoggerFilter(LoggerFactory)
+                {
+                    LogOnStart = true,
+                    LogOnStop = true
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(
-            IApplicationBuilder app,
-            IHostingEnvironment env,
-            IApplicationLifetime applicationLifetime,
-            ILogger<Startup> eventLogger)
+        IApplicationBuilder app,
+        IHostingEnvironment env,
+        IApplicationLifetime applicationLifetime,
+        ILogger<Startup> eventLogger)
         {
 
 
