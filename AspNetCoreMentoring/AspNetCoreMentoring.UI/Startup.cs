@@ -30,6 +30,8 @@ namespace AspNetCoreMentoring.UI
             services.InstallInfrastractureDependencies(Configuration);
             services.InstallApplicationDependencies(Configuration);
 
+            services.AddSingleton<IImageCacheHelper, ImageCacheHelper>();
+
             services.AddAutoMapper();
             services.AddMvc();
         }
@@ -70,8 +72,8 @@ namespace AspNetCoreMentoring.UI
             app.UseImageCachingMiddleware(new CachingOptions
             {
                 CacheDirectory = "CachedImages",
-                CacheDuration = new System.TimeSpan(1,0,0),
-                MaxImages = 10
+                CacheDuration = new System.TimeSpan(0, 0, 60),
+                MaxImages = 3
             });
 
             app.UseMvc(routes =>
