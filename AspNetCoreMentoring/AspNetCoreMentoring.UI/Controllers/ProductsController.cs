@@ -55,6 +55,11 @@ namespace AspNetCoreMentoring.UI.Controllers
         public async Task<IActionResult> EditProduct(int id)
         {
             var existingProduct = await _productsService.GetProductAsync(id);
+
+            if (existingProduct == null)
+            {
+                return RedirectToAction("NotFoundView", "Error");
+            }
             var model = _mapper.Map<ProductWriteItemViewModel>(existingProduct);
 
             await FillSelectLists(model);

@@ -1,10 +1,7 @@
 ﻿using AspNetCoreMentoring.Core.Interfaces;
 using AspNetCoreMentoring.Infrastructure.EfEntities;
-using AspNetCoreMentoring.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreMentoring.UI.ViewModels.Category;
 using AutoMapper;
@@ -17,6 +14,7 @@ namespace AspNetCoreMentoring.UI.Controllers
     {
         private readonly ICategoriesService _categoriesService;
         private readonly IMapper _mapper;
+
         public CategoriesController(
             ICategoriesService categoriesService,
             IMapper mapper)
@@ -51,8 +49,12 @@ namespace AspNetCoreMentoring.UI.Controllers
         {
             var existingCategory = await _categoriesService.GetCategoryAsync(id);
 
-            var model = _mapper.Map<CategoryWriteItemViewModel>(existingCategory);
+            if (existingCategory == null)
+            {
+                return RedirectToAction("NotFoundView", "Error");
+            }
 
+            var model = _mapper.Map<CategoryWriteItemViewModel>(existingCategory);
 
             return View(model);
         }
@@ -60,10 +62,15 @@ namespace AspNetCoreMentoring.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> EditCategory(CategoryWriteItemViewModel updateCategoryModel)
         {
-            var model = _mapper.Map<Categories>(updateCategoryModel);
-            await _categoriesService.UpdateCategoryAsync(model);
+            if (ModelState.IsValid)
+            {
+                var model = _mapper.Map<Categories>(updateCategoryModel);
+                await _categoriesService.UpdateCategoryAsync(model);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+
+            return View(updateCategoryModel);
         }
 
 

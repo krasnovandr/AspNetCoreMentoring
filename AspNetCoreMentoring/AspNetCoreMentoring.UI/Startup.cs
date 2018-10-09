@@ -25,7 +25,6 @@ namespace AspNetCoreMentoring.UI
         public ILogger<Startup> Logger { get; }
         public ILoggerFactory LoggerFactory { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             Logger.LogInformation("Current Connection string {0}", Configuration.GetConnectionString("NorthwindConnection"));
@@ -54,8 +53,6 @@ namespace AspNetCoreMentoring.UI
         IApplicationLifetime applicationLifetime,
         ILogger<Startup> eventLogger)
         {
-
-
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
@@ -66,8 +63,13 @@ namespace AspNetCoreMentoring.UI
                 app.UseExceptionHandler("/Error");
             }
 
-            applicationLifetime.ApplicationStarted.Register(() => eventLogger.LogInformation("Custom Log AppStarted with path {0}", env.ContentRootPath));
-            applicationLifetime.ApplicationStopping.Register(() => eventLogger.LogInformation("Custom Log AppStopped"));
+
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
+
+            applicationLifetime.ApplicationStarted.Register(() => 
+                eventLogger.LogInformation("Custom Log AppStarted with path {0}", env.ContentRootPath));
+            applicationLifetime.ApplicationStopping.Register(() => 
+                eventLogger.LogInformation("Custom Log AppStopped"));
 
             app.UseStaticFiles();
 

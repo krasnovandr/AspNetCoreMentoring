@@ -33,5 +33,12 @@ namespace AspNetCoreMentoring.UI.Controllers
 
             return View("Error", errorModel);
         }
+
+
+        [Route("error/404")]
+        public IActionResult NotFoundView()
+        {
+            return View();
+        }
     }
 }

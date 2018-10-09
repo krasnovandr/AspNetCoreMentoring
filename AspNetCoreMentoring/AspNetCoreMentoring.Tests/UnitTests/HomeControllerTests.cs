@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AspNetCoreMentoring.Tests
+namespace AspNetCoreMentoring.Tests.UnitTests
 {
     public class HomeControllerTests
     {
