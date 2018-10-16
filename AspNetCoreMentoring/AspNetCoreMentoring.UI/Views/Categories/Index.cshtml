@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<AspNetCoreMentoring.UI.ViewModels.Category.CategoryReadListViewModel>
+
+@{
+    ViewData["Title"] = "Categories list";
+}
 <div class="row">
     <div class="col-md-8">
         <table class="table table-bordered">
@@ -39,3 +43,8 @@
         </table>
     </div>
 </div>
+@section Footer{
+    <div class=" text-center">
+        It is prohibited to create new categories
+    </div>
+}

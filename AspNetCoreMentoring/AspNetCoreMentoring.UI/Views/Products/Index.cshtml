@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<AspNetCoreMentoring.UI.ViewModels.Product.ProductReadListViewModel>
-<hr/>
+ @{
+     ViewData["Title"] = "Products Page";
+ }
+<hr />
 <p>
     <a asp-area="" asp-controller="Products" asp-action="CreateProduct" class=" btn btn-success">Create New Product</a>
-
 </p>
 <div class="row">
     <div class="col-md-8">
@@ -49,3 +51,9 @@
         </table>
     </div>
 </div>
+
+@section Footer{
+    <div class=" text-center">
+        All products are rendered here
+    </div>
+}

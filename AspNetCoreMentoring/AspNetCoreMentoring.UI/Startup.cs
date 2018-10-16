@@ -2,6 +2,7 @@
 using AspNetCoreMentoring.DI;
 using AspNetCoreMentoring.UI.Filters;
 using AspNetCoreMentoring.UI.Middleware;
+using AspNetCoreMentoring.UI.ViewComponents;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -44,6 +45,8 @@ namespace AspNetCoreMentoring.UI
                     LogOnStop = true
                 });
             });
+
+            services.AddTransient<BreadcrumbService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

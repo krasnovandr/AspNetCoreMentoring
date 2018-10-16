@@ -330,3 +330,5 @@ ASALocalRun/
 .mfractor/
 
 *.txt
+
+**/wwwroot/lib

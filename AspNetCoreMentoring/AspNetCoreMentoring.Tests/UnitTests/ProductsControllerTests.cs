@@ -86,9 +86,9 @@ namespace AspNetCoreMentoring.Tests.UnitTests
         [Fact]
         public async Task GetCreateProduct_ShouldReturnCreateView_ReturnsView()
         {
-            var expectedÑategories = _fixture.CreateMany<Categories>(5);
+            var expectedCategories = _fixture.CreateMany<Categories>(5);
             _categoriesService.Setup(service => service.GetCategoriesAsync())
-                 .ReturnsAsync(expectedÑategories).Verifiable();
+                 .ReturnsAsync(expectedCategories).Verifiable();
 
             var expectedSuppliers = _fixture.CreateMany<Suppliers>(5);
             _supplierService.Setup(service => service.GetSuppliersAsync())
@@ -128,9 +128,9 @@ namespace AspNetCoreMentoring.Tests.UnitTests
             _productsService.Setup(service => service.GetProductAsync(It.Is<int>(v => v == testId)))
                 .ReturnsAsync(expectedProduct).Verifiable();
 
-            var expectedÑategories = _fixture.CreateMany<Categories>(5);
+            var expectedCategories = _fixture.CreateMany<Categories>(5);
             _categoriesService.Setup(service => service.GetCategoriesAsync())
-                 .ReturnsAsync(expectedÑategories).Verifiable();
+                 .ReturnsAsync(expectedCategories).Verifiable();
 
             var expectedSuppliers = _fixture.CreateMany<Suppliers>(5);
             _supplierService.Setup(service => service.GetSuppliersAsync())
@@ -214,9 +214,9 @@ namespace AspNetCoreMentoring.Tests.UnitTests
         {
             var editedProductModel = _fixture.Create<ProductWriteItemViewModel>();
 
-            var expectedÑategories = _fixture.CreateMany<Categories>(5);
+            var expectedCategories = _fixture.CreateMany<Categories>(5);
             _categoriesService.Setup(service => service.GetCategoriesAsync())
-                 .ReturnsAsync(expectedÑategories).Verifiable();
+                 .ReturnsAsync(expectedCategories).Verifiable();
 
             var expectedSuppliers = _fixture.CreateMany<Suppliers>(5);
             _supplierService.Setup(service => service.GetSuppliersAsync())

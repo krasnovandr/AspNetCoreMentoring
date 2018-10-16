@@ -1,13 +1,21 @@
 ﻿@model AspNetCoreMentoring.UI.ViewModels.Product.ProductWriteItemViewModel
-
+@{
+    ViewData["Title"] = "Edit Product";
+}
 
 <form asp-action="EditProduct" class="form-horizontal">
     <h2>EditProduct</h2>
     <hr />
-    
+
 
     @Html.HiddenFor(v => v.ProductId)
 
     <partial name="ProductForm" />
 </form>
 
+
+@section Footer{
+    <div class=" text-center">
+        Pagge for Product Edit Screen
+    </div>
+}

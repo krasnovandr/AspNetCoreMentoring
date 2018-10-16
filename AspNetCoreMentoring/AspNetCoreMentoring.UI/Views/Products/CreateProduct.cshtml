@@ -1,11 +1,12 @@
 ﻿@model AspNetCoreMentoring.UI.ViewModels.Product.ProductWriteItemViewModel
 
-
+@{
+    ViewData["Title"] = "Create New Product";
+}
 
 <form asp-action="CreateProduct" class="form-horizontal">
     <h2>Create New Product</h2>
     <div><a asp-area="" asp-controller="Products" asp-action="Index">Back to products</a></div>
     <hr />
     <partial name="ProductForm" />
-
 </form>

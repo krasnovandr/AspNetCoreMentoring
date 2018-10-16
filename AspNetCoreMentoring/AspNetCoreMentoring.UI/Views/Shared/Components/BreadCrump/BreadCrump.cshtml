@@ -1,0 +1,31 @@
+﻿@inject AspNetCoreMentoring.UI.ViewComponents.BreadcrumbService BreadcrumbService
+
+
+<div class="row">
+    <div class="col-md-10">
+        <nav>
+            <ol class="breadcrumb  ">
+                <li class="breadcrumb-item ">
+                    <a 
+                       asp-controller="Home"
+                       asp-action="Index" >
+                        Home Page
+                    </a>
+                </li>
+                @foreach (var breadcrumb in BreadcrumbService.GetBreadcrumbs())
+                {
+                    <li class="breadcrumb-item ">
+                        <a asp-area="@breadcrumb.Area"
+                           asp-controller="@breadcrumb.Controller"
+                           asp-action="@breadcrumb.Action"
+                           asp-route-id="@breadcrumb.Id">
+                            @breadcrumb.Title
+                        </a>
+                    </li>
+                }
+            </ol>
+        </nav>
+
+    </div>
+
+</div>
