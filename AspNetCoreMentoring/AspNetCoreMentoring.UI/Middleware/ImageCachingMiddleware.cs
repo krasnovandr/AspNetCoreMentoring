@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -29,7 +30,7 @@ namespace AspNetCoreMentoring.UI.Middleware
         {
             var imageId = context.Request?.Path.Value.Split('/').Last();
 
-            if (context.Request.Path.Value.Contains("Image"))
+            if (context.Request.Path.Value.Contains("image", StringComparison.InvariantCultureIgnoreCase))
             {
                 _cacheHelper.InvalidateCacheIfRequired();
 

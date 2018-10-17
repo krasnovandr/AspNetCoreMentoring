@@ -29,13 +29,12 @@
 
                     </td>
                     <td>   @Html.DisplayFor(modelItem => category.Description)</td>
-                    <td>
-                        <a asp-area=""
-                           asp-controller="Categories"
-                           asp-action="CategoryImage"
-                           asp-route-id="@category.CategoryId">
-                            Image
+                    <td >
+                        <a northwind-id="@category.CategoryId">
+                            Link with tag helper
                         </a>
+                        <hr>
+                        @Html.NorthwindImageLink(category.CategoryId, "Link with html helper")
                     </td>
                 </tr>
             }
