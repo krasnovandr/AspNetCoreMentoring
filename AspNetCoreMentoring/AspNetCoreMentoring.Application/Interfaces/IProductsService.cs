@@ -10,7 +10,9 @@ namespace AspNetCoreMentoring.Core.Interfaces
         Task<IEnumerable<Products>> GetProductsAsync(int page, int itemsPerPage);
 
         Task<Products> GetProductAsync(int productId);
-        Task CreateProductAsync(Products products);
-        Task UpdateProductAsync(Products products);
+        Task<Products> CreateProductAsync(Products products);
+        Task<Products> UpdateProductAsync(Products productForUpdate);
+
+        Task DeleteProductAsync(int id);
     }
 }

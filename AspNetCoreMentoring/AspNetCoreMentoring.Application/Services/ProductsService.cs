@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreMentoring.Core.Exceptions;
 using AspNetCoreMentoring.Core.Interfaces;
 using AspNetCoreMentoring.Infrastructure;
 using AspNetCoreMentoring.Infrastructure.EfEntities;
@@ -16,9 +18,21 @@ namespace AspNetCoreMentoring.Core.Services
             _productsRepository = productsRepository;
         }
 
-        public async Task CreateProductAsync(Products product)
+        public async Task<Products> CreateProductAsync(Products product)
         {
-            await _productsRepository.CreateAsync(product);
+            return await _productsRepository.CreateAsync(product);
+        }
+
+        public async Task DeleteProductAsync(int id)
+        {
+            var product = await _productsRepository.FindByIdAsync(id);
+
+            if (product == null)
+            {
+                throw new EntityNotFoundException($"Product with id {id} wasn't found");
+            }
+
+            await _productsRepository.DeleteAsync(product);
         }
 
         public async Task<Products> GetProductAsync(int productId)
@@ -35,9 +49,23 @@ namespace AspNetCoreMentoring.Core.Services
                 pr => pr.Supplier, pr => pr.Category);
         }
 
-        public async Task UpdateProductAsync(Products product)
+        public async Task<Products> UpdateProductAsync(Products productForUpdate)
         {
-            await _productsRepository.UpdateAsync(product);
+            Guard.ArgumentNotNull(nameof(productForUpdate), productForUpdate);
+
+            IEnumerable<Products> products = await _productsRepository
+                .FindByAsync(v => v.ProductId == productForUpdate.ProductId);
+
+            var product = products.FirstOrDefault();
+
+            if (product == null )
+            {
+                throw new EntityNotFoundException($"Product with id {productForUpdate.ProductId} wasn't found");
+            }
+
+            await _productsRepository.UpdateAsync(productForUpdate);
+
+            return productForUpdate;
         }
     }
 }

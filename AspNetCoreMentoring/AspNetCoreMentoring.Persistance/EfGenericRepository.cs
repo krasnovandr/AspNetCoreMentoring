@@ -32,14 +32,17 @@ namespace AspNetCoreMentoring.Infrastructure
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task CreateAsync(TEntity item)
+        public async Task<TEntity> CreateAsync(TEntity item)
         {
-            await _dbSet.AddAsync(item);
+            var result = await _dbSet.AddAsync(item);
             await _context.SaveChangesAsync();
+
+            return result.Entity;
         }
         public async Task UpdateAsync(TEntity item)
         {
             _context.Entry(item).State = EntityState.Modified;
+            //_context.Update(item);
             await _context.SaveChangesAsync();
         }
         public async Task DeleteAsync(TEntity item)
