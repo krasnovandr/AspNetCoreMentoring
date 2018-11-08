@@ -1,4 +1,4 @@
-﻿using AspNetCoreMentoring.API.Dto.Category;
+﻿using AspNetCoreMentoring.API.Contracts.Dto.Category;
 using AspNetCoreMentoring.Infrastructure.EfEntities;
 using AutoMapper;
 

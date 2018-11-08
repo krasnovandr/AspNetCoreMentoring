@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using AspNetCoreMentoring.API.Dto.Category;
+using AspNetCoreMentoring.API.Contracts.Dto.Category;
 using AspNetCoreMentoring.Core.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreMentoring.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/categories")]
     [ApiController]
     public class CategoriesApiController : ControllerBase
     {
@@ -30,6 +30,7 @@ namespace AspNetCoreMentoring.API.Controllers
             _mapper = mapper;
         }
         [HttpPost]
+        [Route("Image")]
         public async Task<IActionResult> UploadCategoryImage([FromForm]CategoryUpdateDto updateCategoryModel)
         {
             var imageInMemory = new MemoryStream();
@@ -43,7 +44,7 @@ namespace AspNetCoreMentoring.API.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("Image/{id}")]
         public async Task<IActionResult> GetContent(int id)
         {
             var category = await this._categoriesService.GetCategoryAsync(id);
@@ -52,18 +53,6 @@ namespace AspNetCoreMentoring.API.Controllers
             {
                 return this.NotFound();
             }
-
-            //var result = new HttpResponseMessage(HttpStatusCode.OK)
-            //{
-            //    Content = new ByteArrayContent(category.Picture.ToArray())
-            //};
-
-            //result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            //{
-            //    FileName = category.CategoryName
-            //};
-
-            //result.Content.Headers.ContentType = new MediaTypeHeaderValue(MediaTypeNames.Image.Jpeg);
 
             return this.File(category.Picture.ToArray(), MediaTypeNames.Image.Jpeg);
         }

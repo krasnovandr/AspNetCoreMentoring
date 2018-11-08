@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using AspNetCoreMentoring.API.Dto.Product;
+using AspNetCoreMentoring.API.Contracts.Dto.Product;
 using AspNetCoreMentoring.Core.Exceptions;
 using AspNetCoreMentoring.Core.Interfaces;
 using AspNetCoreMentoring.Infrastructure.EfEntities;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -33,9 +30,8 @@ namespace AspNetCoreMentoring.API.Api
             _logger = logger;
         }
 
-
-        // GET: api/ProductsApi
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<ProductReadListDto>), 200)]
         public async Task<IActionResult> Get(int pageNumber = 0, int itemsPerPage = 10)
         {
             var products = await _productsService.GetProductsAsync(pageNumber, itemsPerPage);
@@ -46,6 +42,8 @@ namespace AspNetCoreMentoring.API.Api
         }
 
         [HttpGet("{id}", Name = "Get")]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(ProductWriteItemDto), 200)]
         public async Task<IActionResult> Get(int id)
         {
             var existingProduct = await _productsService.GetProductAsync(id);
@@ -59,8 +57,9 @@ namespace AspNetCoreMentoring.API.Api
             return Ok(model);
         }
 
-        // POST: api/ProductsApi
         [HttpPost]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(typeof(ProductCreateItemDto), 201)]
         public async Task<IActionResult> Post([FromBody] ProductWriteItemDto createModel)
         {
             if (ModelState.IsValid == false)
@@ -69,13 +68,16 @@ namespace AspNetCoreMentoring.API.Api
             }
 
             Products product = _mapper.Map<Products>(createModel);
+
             var cereatedProduct =await _productsService.CreateProductAsync(product);
 
-            return CreatedAtAction("Get", new { id = cereatedProduct.ProductId }, cereatedProduct);
+            var  result  = _mapper.Map<ProductCreateItemDto>(cereatedProduct);
+            return CreatedAtAction("Get", new { id = cereatedProduct.ProductId }, result);
         }
 
-        // PUT: api/ProductsApi/5
         [HttpPut("{id}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(typeof(ProductCreateItemDto), 201)]
         public async Task<IActionResult> Put(int id, [FromBody] ProductWriteItemDto updateModel)
         {
             try
@@ -91,8 +93,9 @@ namespace AspNetCoreMentoring.API.Api
             return Ok(updateModel);
         }
 
-        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(204)]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -101,7 +104,6 @@ namespace AspNetCoreMentoring.API.Api
             }
             catch (EntityNotFoundException)
             {
-
                 return NotFound($"Product with id {id} was not found");
             }
 

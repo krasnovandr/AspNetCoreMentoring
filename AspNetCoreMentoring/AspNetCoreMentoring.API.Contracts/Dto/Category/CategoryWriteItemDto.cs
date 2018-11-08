@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspNetCoreMentoring.API.Dto.Category
+namespace AspNetCoreMentoring.API.Contracts.Dto.Category
 {
     public class CategoryWriteItemDto
     {

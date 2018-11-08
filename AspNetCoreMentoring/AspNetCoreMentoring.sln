@@ -15,7 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.DI", "A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.Tests", "AspNetCoreMentoring.Tests\AspNetCoreMentoring.Tests.csproj", "{4D5BE5BD-B1E1-47DA-BF46-F42B0471E067}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreMentoring.API", "AspNetCoreMentoring.API\AspNetCoreMentoring.API.csproj", "{78CEEBD2-477E-4006-B2A6-D41A484F0B4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.API", "AspNetCoreMentoring.API\AspNetCoreMentoring.API.csproj", "{78CEEBD2-477E-4006-B2A6-D41A484F0B4F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiClients", "ApiClients", "{38853FFC-60DD-450C-9795-A44FEADF2CC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreMentoring.ConsoleClient", "AspNetCoreMentoring.ConsoleClient\AspNetCoreMentoring.ConsoleClient.csproj", "{246EF168-1C35-4617-810E-9133DB9D826E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreMentoring.API.Contracts", "AspNetCoreMentoring.API.Contracts\AspNetCoreMentoring.API.Contracts.csproj", "{0D260098-4095-4B29-871E-A127EE743D26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,9 +59,20 @@ Global
 		{78CEEBD2-477E-4006-B2A6-D41A484F0B4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78CEEBD2-477E-4006-B2A6-D41A484F0B4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78CEEBD2-477E-4006-B2A6-D41A484F0B4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{246EF168-1C35-4617-810E-9133DB9D826E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{246EF168-1C35-4617-810E-9133DB9D826E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{246EF168-1C35-4617-810E-9133DB9D826E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{246EF168-1C35-4617-810E-9133DB9D826E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D260098-4095-4B29-871E-A127EE743D26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D260098-4095-4B29-871E-A127EE743D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D260098-4095-4B29-871E-A127EE743D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D260098-4095-4B29-871E-A127EE743D26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{246EF168-1C35-4617-810E-9133DB9D826E} = {38853FFC-60DD-450C-9795-A44FEADF2CC6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {769FFB34-7FFC-4B72-82E6-B18180156C2E}

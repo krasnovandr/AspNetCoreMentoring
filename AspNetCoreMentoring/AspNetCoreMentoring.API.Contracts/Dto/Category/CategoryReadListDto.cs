@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreMentoring.API.Dto.Category
+﻿namespace AspNetCoreMentoring.API.Contracts.Dto.Category
 {
     public class CategoryReadListDto
     {

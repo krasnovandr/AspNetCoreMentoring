@@ -1,4 +1,4 @@
-﻿using AspNetCoreMentoring.API.Dto.Product;
+﻿using AspNetCoreMentoring.API.Contracts.Dto.Product;
 using AspNetCoreMentoring.Infrastructure.EfEntities;
 using AutoMapper;
 
@@ -15,6 +15,10 @@ namespace AspNetCoreMentoring.API.Mapping
             this.CreateMap<Products, ProductWriteItemDto>()
                 .ForMember(dest => dest.SelectedCategoryId, opt => opt.MapFrom(src => src.CategoryId))
                 .ForMember(dest => dest.SelectedSupplierId, opt => opt.MapFrom(src => src.SupplierId));
+
+            this.CreateMap<Products, ProductCreateItemDto>()
+                   .ForMember(dest => dest.SelectedCategoryId, opt => opt.MapFrom(src => src.CategoryId))
+                   .ForMember(dest => dest.SelectedSupplierId, opt => opt.MapFrom(src => src.SupplierId));
 
             this.CreateMap<ProductWriteItemDto, Products>()
               .ForMember(dest => dest.SupplierId, opt => opt.MapFrom(src => src.SelectedSupplierId))

@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AspNetCoreMentoring.API.Contracts\AspNetCoreMentoring.API.Contracts.csproj" />
     <ProjectReference Include="..\AspNetCoreMentoring.DI\AspNetCoreMentoring.DI.csproj" />
   </ItemGroup>
 

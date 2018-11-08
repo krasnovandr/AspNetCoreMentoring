@@ -1,14 +1,10 @@
-﻿using AspNetCoreMentoring.API.Dto.Category;
-using AspNetCoreMentoring.API.Dto.Supplier;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace AspNetCoreMentoring.API.Dto.Product
+namespace AspNetCoreMentoring.API.Contracts.Dto.Product
 {
     public class ProductWriteItemDto
     {
-        //public int ProductId { get; set; }
-
         [Required(ErrorMessage = "Product Name is required")]
         [StringLength(100, MinimumLength = 3)]
         public string ProductName { get; set; }

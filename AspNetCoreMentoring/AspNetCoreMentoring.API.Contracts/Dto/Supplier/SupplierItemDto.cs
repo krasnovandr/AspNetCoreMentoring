@@ -1,4 +1,4 @@
-﻿namespace AspNetCoreMentoring.API.Dto.Supplier
+﻿namespace AspNetCoreMentoring.API.Contracts.Dto.Supplier
 {
     public class SupplierItemDto
     {
