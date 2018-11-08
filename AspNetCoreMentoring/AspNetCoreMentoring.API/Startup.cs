@@ -25,7 +25,7 @@ namespace AspNetCoreMentoring.API
             services.InstallInfrastractureDependencies(Configuration);
             services.InstallApplicationDependencies(Configuration);
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
