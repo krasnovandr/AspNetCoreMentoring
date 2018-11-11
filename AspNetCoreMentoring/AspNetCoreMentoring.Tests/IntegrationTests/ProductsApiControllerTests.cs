@@ -37,6 +37,9 @@ namespace AspNetCoreMentoring.Tests.IntegrationTests
         public async Task GetProducts_FirstPage3Items_Returns3Products()
         {
             var response = await _testHostFixture.Client.GetAsync($"{baseUrl}?itemsPerPage=3");
+
+            response.EnsureSuccessStatusCode();
+
             List<ProductReadListDto> products =
                 JsonConvert.DeserializeObject<List<ProductReadListDto>>(await response.Content.ReadAsStringAsync());
 
@@ -74,7 +77,8 @@ namespace AspNetCoreMentoring.Tests.IntegrationTests
             var deleteProductResponse = await _testHostFixture.Client.DeleteAsync(
              $"{baseUrl}/{createdProduct.ProductId}");
 
-            Assert.True(deleteProductResponse.IsSuccessStatusCode);
+            deleteProductResponse.EnsureSuccessStatusCode();
+
             Assert.Equal(HttpStatusCode.NoContent, deleteProductResponse.StatusCode);
         }
 
@@ -84,11 +88,12 @@ namespace AspNetCoreMentoring.Tests.IntegrationTests
                 $"{baseUrl}/{createdProduct.ProductId}",
                 retrievedProduct);
 
+            updateProductResponse.EnsureSuccessStatusCode();
+
             var updatedProduct =
                 JsonConvert.DeserializeObject<ProductReadItemDto>(
                     await updateProductResponse.Content.ReadAsStringAsync());
 
-            Assert.True(updateProductResponse.IsSuccessStatusCode);
             Assert.Equal(HttpStatusCode.OK, updateProductResponse.StatusCode);
             Assert.Equal(retrievedProduct.ProductId, updatedProduct.ProductId);
             AssertProductsEquality(updatedProduct, retrievedProduct);
@@ -98,11 +103,12 @@ namespace AspNetCoreMentoring.Tests.IntegrationTests
         {
             var getProductResponse = await _testHostFixture.Client.GetAsync($"{baseUrl}/{createdProduct.ProductId}");
 
+            getProductResponse.EnsureSuccessStatusCode();
+
             var getProduct =
                 JsonConvert.DeserializeObject<ProductReadItemDto>(
                     await getProductResponse.Content.ReadAsStringAsync());
 
-            Assert.True(getProductResponse.IsSuccessStatusCode);
             Assert.Equal(HttpStatusCode.OK, getProductResponse.StatusCode);
             Assert.Equal(createdProduct.ProductId, getProduct.ProductId);
             AssertProductsEquality(createdProduct, getProduct);
@@ -115,11 +121,12 @@ namespace AspNetCoreMentoring.Tests.IntegrationTests
             var productCreatedResponse = await _testHostFixture.Client.PostAsJsonAsync(
                 baseUrl, expectedProduct);
 
+            productCreatedResponse.EnsureSuccessStatusCode();
+
             var actualProduct =
                 JsonConvert.DeserializeObject<ProductReadItemDto>(
                     await productCreatedResponse.Content.ReadAsStringAsync());
 
-            Assert.True(productCreatedResponse.IsSuccessStatusCode);
             Assert.Equal(HttpStatusCode.Created, productCreatedResponse.StatusCode);
 
             Assert.NotEqual(default(int), actualProduct.ProductId);
