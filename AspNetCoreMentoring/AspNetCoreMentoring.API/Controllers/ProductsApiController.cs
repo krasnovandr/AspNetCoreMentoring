@@ -52,14 +52,14 @@ namespace AspNetCoreMentoring.API.Api
             {
                 return NotFound($"Product with id {id} was not found");
             }
-            var model = _mapper.Map<ProductWriteItemDto>(existingProduct);
+            var model = _mapper.Map<ProductReadItemDto>(existingProduct);
 
             return Ok(model);
         }
 
         [HttpPost]
         [ProducesResponseType(400)]
-        [ProducesResponseType(typeof(ProductCreateItemDto), 201)]
+        [ProducesResponseType(typeof(ProductReadItemDto), 201)]
         public async Task<IActionResult> Post([FromBody] ProductWriteItemDto createModel)
         {
             if (ModelState.IsValid == false)
@@ -71,13 +71,13 @@ namespace AspNetCoreMentoring.API.Api
 
             var cereatedProduct =await _productsService.CreateProductAsync(product);
 
-            var  result  = _mapper.Map<ProductCreateItemDto>(cereatedProduct);
+            var  result  = _mapper.Map<ProductReadItemDto>(cereatedProduct);
             return CreatedAtAction("Get", new { id = cereatedProduct.ProductId }, result);
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(400)]
-        [ProducesResponseType(typeof(ProductCreateItemDto), 201)]
+        [ProducesResponseType(typeof(ProductReadItemDto), 201)]
         public async Task<IActionResult> Put(int id, [FromBody] ProductWriteItemDto updateModel)
         {
             try
@@ -85,12 +85,13 @@ namespace AspNetCoreMentoring.API.Api
                 Products product = _mapper.Map<Products>(updateModel);
                 product.ProductId = id;
                 var updatedProduct = await _productsService.UpdateProductAsync(product);
+                var result = _mapper.Map<ProductReadItemDto>(updatedProduct);
+                return Ok(result);
             }
             catch (EntityNotFoundException)
             {
                 return NotFound($"Product with id {id} was not found");
             }
-            return Ok(updateModel);
         }
 
         [HttpDelete("{id}")]

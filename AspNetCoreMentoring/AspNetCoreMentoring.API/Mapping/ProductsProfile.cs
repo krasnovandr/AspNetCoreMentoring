@@ -16,7 +16,7 @@ namespace AspNetCoreMentoring.API.Mapping
                 .ForMember(dest => dest.SelectedCategoryId, opt => opt.MapFrom(src => src.CategoryId))
                 .ForMember(dest => dest.SelectedSupplierId, opt => opt.MapFrom(src => src.SupplierId));
 
-            this.CreateMap<Products, ProductCreateItemDto>()
+            this.CreateMap<Products, ProductReadItemDto>()
                    .ForMember(dest => dest.SelectedCategoryId, opt => opt.MapFrom(src => src.CategoryId))
                    .ForMember(dest => dest.SelectedSupplierId, opt => opt.MapFrom(src => src.SupplierId));
 

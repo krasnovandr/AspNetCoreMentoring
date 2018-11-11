@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreMentoring.API.Contracts.Dto.Product
 {
-    public class ProductCreateItemDto : ProductWriteItemDto
+    public class ProductReadItemDto : ProductWriteItemDto
     {
         public int ProductId { get; set; }
     }
