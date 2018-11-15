@@ -1,4 +1,5 @@
-﻿using AspNetCoreMentoring.Infrastructure.EfEntities;
+﻿using AspNetCoreMentoring.Infrastructure;
+using AspNetCoreMentoring.Infrastructure.EfEntities;
 using AspNetCoreMentoring.UI.ViewModels.Product;
 using AutoMapper;
 using System;
@@ -12,6 +13,8 @@ namespace AspNetCoreMentoring.UI.Mapping
     {
         public ProductsProfile()
         {
+            this.CreateMap<ProductQueryResult, ProductReadListViewModel>();
+
             this.CreateMap<Products, ProductReadListViewModel>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
                 .ForMember(dest => dest.SupplierName, opt => opt.MapFrom(src => src.Supplier.CompanyName));

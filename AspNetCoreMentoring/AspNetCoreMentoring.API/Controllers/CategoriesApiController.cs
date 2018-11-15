@@ -29,6 +29,17 @@ namespace AspNetCoreMentoring.API.Controllers
             _categoriesService = categoriesService;
             _mapper = mapper;
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<CategoryReadListDto>), 200)]
+        public async Task<IActionResult> GetCategories()
+        {
+            var categories = await _categoriesService.GetCategoriesAsync();
+            var result = _mapper.Map<IEnumerable<CategoryReadListDto>>(categories);
+
+            return Ok(result);
+        }
+
         [HttpPost]
         [Route("Image")]
         public async Task<IActionResult> UploadCategoryImage([FromForm]CategoryUpdateDto updateCategoryModel)

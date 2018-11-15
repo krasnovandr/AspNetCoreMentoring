@@ -1,4 +1,5 @@
 using AspNetCoreMentoring.Core.Interfaces;
+using AspNetCoreMentoring.Infrastructure;
 using AspNetCoreMentoring.Infrastructure.EfEntities;
 using AspNetCoreMentoring.UI.Controllers;
 using AspNetCoreMentoring.UI.Mapping;
@@ -46,7 +47,7 @@ namespace AspNetCoreMentoring.Tests.UnitTests
         [Fact]
         public async Task Index_ShouldReturnAllProducts_ReturnsAllProducts()
         {
-            var expectedProducts = _fixture.CreateMany<Products>(5);
+            var expectedProducts = _fixture.CreateMany<ProductQueryResult>(5);
             _productsService.Setup(service => service.GetProductsAsync(It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(expectedProducts);
 
@@ -75,8 +76,8 @@ namespace AspNetCoreMentoring.Tests.UnitTests
             Assert.Equal(expectedProducts.Select(v => v.ProductName), model.Select(v => v.ProductName));
             Assert.Equal(expectedProducts.Select(v => v.QuantityPerUnit), model.Select(v => v.QuantityPerUnit));
             Assert.Equal(expectedProducts.Select(v => v.ReorderLevel), model.Select(v => v.ReorderLevel));
-            Assert.Equal(expectedProducts.Select(v => v.Supplier.CompanyName), model.Select(v => v.SupplierName));
-            Assert.Equal(expectedProducts.Select(v => v.Category.CategoryName), model.Select(v => v.CategoryName));
+            Assert.Equal(expectedProducts.Select(v => v.SupplierName), model.Select(v => v.SupplierName));
+            Assert.Equal(expectedProducts.Select(v => v.CategoryName), model.Select(v => v.CategoryName));
             Assert.Equal(expectedProducts.Select(v => v.UnitPrice), model.Select(v => v.UnitPrice));
             Assert.Equal(expectedProducts.Select(v => v.UnitsInStock), model.Select(v => v.UnitsInStock));
             Assert.Equal(expectedProducts.Select(v => v.UnitsOnOrder), model.Select(v => v.UnitsOnOrder));

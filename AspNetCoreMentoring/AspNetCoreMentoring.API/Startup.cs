@@ -35,7 +35,7 @@ namespace AspNetCoreMentoring.API
                 config.OperationFilter<FormFileSwaggerFilter>();
 
             });
-           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,9 +50,15 @@ namespace AspNetCoreMentoring.API
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseMvc();
 
+            app.UseHttpsRedirection();
+
+            app.UseCors(c => c
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin());
+
+            app.UseMvc();
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>

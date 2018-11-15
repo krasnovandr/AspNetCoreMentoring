@@ -11,10 +11,13 @@ namespace AspNetCoreMentoring.Core.Services
     public class ProductsService : IProductsService
     {
         private readonly IGenericRepository<Products> _productsRepository;
+        private readonly IProductsQuery _productsQuery;
 
         public ProductsService(
-            IGenericRepository<Products> productsRepository)
+            IGenericRepository<Products> productsRepository,
+            IProductsQuery productsQuery)
         {
+            _productsQuery = productsQuery;
             _productsRepository = productsRepository;
         }
 
@@ -40,13 +43,11 @@ namespace AspNetCoreMentoring.Core.Services
             return await _productsRepository.FindByIdAsync(productId);
         }
 
-        public async Task<IEnumerable<Products>> GetProductsAsync(int page, int itemsPerPage)
+        public async Task<IEnumerable<ProductQueryResult>> GetProductsAsync(int page, int itemsPerPage)
         {
-            return await _productsRepository.GetWithIncludeAsync(
-                null,
-                page,
-                itemsPerPage,
-                pr => pr.Supplier, pr => pr.Category);
+            var result = await _productsQuery.GetProducts(page,itemsPerPage);
+
+            return result;
         }
 
         public async Task<Products> UpdateProductAsync(Products productForUpdate)
@@ -58,7 +59,7 @@ namespace AspNetCoreMentoring.Core.Services
 
             var product = products.FirstOrDefault();
 
-            if (product == null )
+            if (product == null)
             {
                 throw new EntityNotFoundException($"Product with id {productForUpdate.ProductId} wasn't found");
             }

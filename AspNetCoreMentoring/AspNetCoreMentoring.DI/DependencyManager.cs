@@ -26,6 +26,8 @@ namespace AspNetCoreMentoring.DI
                 options => options.UseSqlServer(configuration.GetConnectionString("NorthwindConnection")));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(EfGenericRepository<>));
+
+            services.AddScoped<IProductsQuery, ProductsQuery>();
         }
     }
 }
