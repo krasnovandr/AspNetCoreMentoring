@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using AspNetCoreMentoring.UI.ViewModels;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreMentoring.UI.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()

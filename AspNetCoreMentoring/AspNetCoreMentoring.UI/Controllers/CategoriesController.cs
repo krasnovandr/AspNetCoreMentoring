@@ -7,9 +7,11 @@ using AspNetCoreMentoring.UI.ViewModels.Category;
 using AutoMapper;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreMentoring.UI.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly ICategoriesService _categoriesService;

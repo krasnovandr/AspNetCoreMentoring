@@ -10,10 +10,11 @@ using AspNetCoreMentoring.UI.ViewModels.Product;
 using AspNetCoreMentoring.UI.ViewModels.Supplier;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreMentoring.UI.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly IProductsService _productsService;

@@ -1,15 +1,22 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using AspNetCoreMentoring.DI;
 using AspNetCoreMentoring.UI.Filters;
 using AspNetCoreMentoring.UI.Middleware;
+using AspNetCoreMentoring.UI.Models;
 using AspNetCoreMentoring.UI.ViewComponents;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AspNetCoreMentoring.UI
 {
@@ -32,6 +39,7 @@ namespace AspNetCoreMentoring.UI
 
             services.InstallInfrastractureDependencies(Configuration);
             services.InstallApplicationDependencies(Configuration);
+            InstallIdentityDependencies(services, Configuration);
 
             services.AddSingleton<IImageCacheHelper, ImageCacheHelper>();
 
@@ -44,7 +52,7 @@ namespace AspNetCoreMentoring.UI
                     LogOnStart = true,
                     LogOnStop = true
                 });
-            });
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddTransient<BreadcrumbService>();
         }
@@ -69,9 +77,9 @@ namespace AspNetCoreMentoring.UI
 
             app.UseStatusCodePagesWithReExecute("/error/{0}");
 
-            applicationLifetime.ApplicationStarted.Register(() => 
+            applicationLifetime.ApplicationStarted.Register(() =>
                 eventLogger.LogInformation("Custom Log AppStarted with path {0}", env.ContentRootPath));
-            applicationLifetime.ApplicationStopping.Register(() => 
+            applicationLifetime.ApplicationStopping.Register(() =>
                 eventLogger.LogInformation("Custom Log AppStopped"));
 
             app.UseStaticFiles();
@@ -92,6 +100,8 @@ namespace AspNetCoreMentoring.UI
                 MaxImages = 3
             });
 
+            app.UseAuthentication();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -101,5 +111,59 @@ namespace AspNetCoreMentoring.UI
 
 
         }
+
+        public void InstallIdentityDependencies(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<AspNetIdentityContext>(
+            options => options.UseSqlServer(configuration.GetConnectionString("AspNetUsersDb")));
+
+            services.AddMvc()
+             .AddRazorPagesOptions(options =>
+             {
+                 options.AllowAreas = true;
+                 options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                 options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+             });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+
+            services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 2;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
+
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = true;
+
+            })
+                .AddEntityFrameworkStores<AspNetIdentityContext>();
+
+            services.AddAuthentication().AddOpenIdConnect(AzureADDefaults.AuthenticationScheme, "<EPAM>", opts =>
+            {
+                Configuration.Bind("AzureAd", opts);
+                opts.Authority = $"{Configuration["AzureAd:Instance"]}{Configuration["AzureAd:TenantId"]}/v2.0/";
+                opts.Scope.Add("email");
+                opts.Scope.Add("openid");
+                opts.Scope.Add("profile");
+                opts.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = "preffered_name"
+                };
+            });
+        }
     }
 }
+
