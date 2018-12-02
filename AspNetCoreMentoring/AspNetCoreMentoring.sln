@@ -19,9 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.API", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiClients", "ApiClients", "{38853FFC-60DD-450C-9795-A44FEADF2CC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreMentoring.ConsoleClient", "AspNetCoreMentoring.ConsoleClient\AspNetCoreMentoring.ConsoleClient.csproj", "{246EF168-1C35-4617-810E-9133DB9D826E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.ConsoleClient", "AspNetCoreMentoring.ConsoleClient\AspNetCoreMentoring.ConsoleClient.csproj", "{246EF168-1C35-4617-810E-9133DB9D826E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreMentoring.API.Contracts", "AspNetCoreMentoring.API.Contracts\AspNetCoreMentoring.API.Contracts.csproj", "{0D260098-4095-4B29-871E-A127EE743D26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.API.Contracts", "AspNetCoreMentoring.API.Contracts\AspNetCoreMentoring.API.Contracts.csproj", "{0D260098-4095-4B29-871E-A127EE743D26}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.Notification", "AspNetCoreMentoring.Notification\AspNetCoreMentoring.Notification.csproj", "{D4E25AD4-2F9D-4437-BAE3-61B7621881F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,10 @@ Global
 		{0D260098-4095-4B29-871E-A127EE743D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D260098-4095-4B29-871E-A127EE743D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D260098-4095-4B29-871E-A127EE743D26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E25AD4-2F9D-4437-BAE3-61B7621881F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E25AD4-2F9D-4437-BAE3-61B7621881F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E25AD4-2F9D-4437-BAE3-61B7621881F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E25AD4-2F9D-4437-BAE3-61B7621881F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

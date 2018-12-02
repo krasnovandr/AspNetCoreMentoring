@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\NewFolder\**" />
+    <Content Remove="wwwroot\lib\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\lib\NewFolder\**" />
+    <None Remove="wwwroot\lib\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="ApplicationDbContext.cs" />
     <Compile Remove="ApplicationUser.cs" />
   </ItemGroup>
@@ -170,6 +177,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AspNetCoreMentoring.DI\AspNetCoreMentoring.DI.csproj" />
+    <ProjectReference Include="..\AspNetCoreMentoring.Notification\AspNetCoreMentoring.Notification.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -182,6 +190,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Identity\Models\" />
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="wwwroot\CachedImages\" />
   </ItemGroup>

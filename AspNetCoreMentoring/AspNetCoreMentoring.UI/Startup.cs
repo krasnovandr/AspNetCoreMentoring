@@ -1,6 +1,11 @@
 ﻿using System;
 using System.IO;
 using AspNetCoreMentoring.DI;
+using AspNetCoreMentoring.Notification;
+using AspNetCoreMentoring.Notification.EmailBuilders;
+using AspNetCoreMentoring.Notification.EmailClient;
+using AspNetCoreMentoring.Notification.EmailTemplates;
+using AspNetCoreMentoring.Notification.Models;
 using AspNetCoreMentoring.UI.Filters;
 using AspNetCoreMentoring.UI.Middleware;
 using AspNetCoreMentoring.UI.Models;
@@ -11,6 +16,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,6 +61,50 @@ namespace AspNetCoreMentoring.UI
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddTransient<BreadcrumbService>();
+
+            InstallNotificationDependencies(services);
+        }
+
+        private void InstallNotificationDependencies(IServiceCollection services)
+        {
+            services.AddTransient<EmailBuilder<UserActivationEmailModel>, UserActivationEmailBuilder>();
+            services.AddTransient<EmailBuilder<ResetPasswordEmailModel>, ForgotPasswordEmailBuilder>();
+
+            services.AddSingleton(sp =>
+            {
+                var emailServerConnectionSettings = new EmailServerConnectionSettings
+                {
+                    ApiKey = Configuration["SendGridApiKey"],
+                    SenderEmailAddress = Configuration["SendGridSenderEmail"],
+                    SenderName = Configuration["SendGridSenderName"]
+                };
+
+                return emailServerConnectionSettings;
+            });
+
+            services.AddTransient<INotificationService, NotificationService>((serviceProvider) =>
+            {
+                var emailConnectionSettings = serviceProvider.GetRequiredService<EmailServerConnectionSettings>();
+                var emailFactory = new EmailClientFactory();
+                var sendGridClient = emailFactory.CreateClient(emailConnectionSettings.ApiKey);
+                var emailBuilderRetriever = new EmailBuilderRetriever(serviceProvider, emailConnectionSettings);
+                return new NotificationService(sendGridClient, emailBuilderRetriever);
+            });
+
+
+            //var assembly = typeof(INotificationService).GetTypeInfo().Assembly;
+            //var embeddedFileProvider = new EmbeddedFileProvider(
+            //    assembly,
+            //    "ViewComponentLibrary"
+            //);
+
+            services.Configure<RazorViewEngineOptions>(options =>
+            {
+                options.FileProviders.Clear();
+                options.FileProviders.Add(new PhysicalFileProvider(Directory.GetCurrentDirectory()));
+            });
+
+            services.AddTransient<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,7 +112,9 @@ namespace AspNetCoreMentoring.UI
         IApplicationBuilder app,
         IHostingEnvironment env,
         IApplicationLifetime applicationLifetime,
-        ILogger<Startup> eventLogger)
+        ILogger<Startup> eventLogger,
+        UserManager<IdentityUser> userManager,
+        RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -93,6 +145,9 @@ namespace AspNetCoreMentoring.UI
                 EnableDirectoryBrowsing = false
             });
 
+            app.UseAuthentication();
+            MyIdentityDataInitializer.SeedData(userManager, roleManager);
+
             app.UseImageCachingMiddleware(new CachingOptions
             {
                 CacheDirectory = "CachedImages",
@@ -100,22 +155,18 @@ namespace AspNetCoreMentoring.UI
                 MaxImages = 3
             });
 
-            app.UseAuthentication();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-
         }
 
         public void InstallIdentityDependencies(IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AspNetIdentityContext>(
-            options => options.UseSqlServer(configuration.GetConnectionString("AspNetUsersDb")));
+                options => options.UseSqlServer(configuration.GetConnectionString("AspNetUsersDb")));
 
             services.AddMvc()
              .AddRazorPagesOptions(options =>
@@ -132,7 +183,7 @@ namespace AspNetCoreMentoring.UI
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 // Password settings
                 options.Password.RequireDigit = true;
@@ -142,16 +193,22 @@ namespace AspNetCoreMentoring.UI
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = true;
                 options.User.RequireUniqueEmail = true;
-                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedEmail = true;
 
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
                 options.Lockout.MaxFailedAccessAttempts = 10;
                 options.Lockout.AllowedForNewUsers = true;
 
             })
-                .AddEntityFrameworkStores<AspNetIdentityContext>();
+            //.AddRoles<IdentityRole>()
+            .AddRoleManager<RoleManager<IdentityRole>>()
+            .AddDefaultUI()
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<AspNetIdentityContext>();
 
-            services.AddAuthentication().AddOpenIdConnect(AzureADDefaults.AuthenticationScheme, "<EPAM>", opts =>
+
+            services.AddAuthentication()
+                .AddOpenIdConnect(AzureADDefaults.AuthenticationScheme, "EPAM Azure AD", opts =>
             {
                 Configuration.Bind("AzureAd", opts);
                 opts.Authority = $"{Configuration["AzureAd:Instance"]}{Configuration["AzureAd:TenantId"]}/v2.0/";

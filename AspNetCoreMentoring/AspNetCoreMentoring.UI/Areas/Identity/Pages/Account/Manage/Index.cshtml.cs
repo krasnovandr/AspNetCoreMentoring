@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using AspNetCoreMentoring.Notification;
+using AspNetCoreMentoring.Notification.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,16 +17,16 @@ namespace AspNetCoreMentoring.UI.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly INotificationService _notificationService;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            IEmailSender emailSender)
+            INotificationService notificationService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
+            _notificationService = notificationService;
         }
 
         public string Username { get; set; }
@@ -135,10 +137,13 @@ namespace AspNetCoreMentoring.UI.Areas.Identity.Pages.Account.Manage
                 pageHandler: null,
                 values: new { userId = userId, code = code },
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
-                email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+            await _notificationService.NotifyAsync(new UserActivationEmailModel
+            {
+                Email = Input.Email,
+                ConfirmationLink = callbackUrl,
+                UserName = user.UserName
+            });
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
