@@ -91,13 +91,6 @@ namespace AspNetCoreMentoring.UI
                 return new NotificationService(sendGridClient, emailBuilderRetriever);
             });
 
-
-            //var assembly = typeof(INotificationService).GetTypeInfo().Assembly;
-            //var embeddedFileProvider = new EmbeddedFileProvider(
-            //    assembly,
-            //    "ViewComponentLibrary"
-            //);
-
             services.Configure<RazorViewEngineOptions>(options =>
             {
                 options.FileProviders.Clear();
@@ -116,16 +109,17 @@ namespace AspNetCoreMentoring.UI
         UserManager<IdentityUser> userManager,
         RoleManager<IdentityRole> roleManager)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseBrowserLink();
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Error");
+            //}
 
+            app.UseDeveloperExceptionPage();
 
             app.UseStatusCodePagesWithReExecute("/error/{0}");
 
