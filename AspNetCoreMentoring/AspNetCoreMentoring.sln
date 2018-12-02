@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.UI", "AspNetCoreMentoring.UI\AspNetCoreMentoring.UI.csproj", "{F4A62984-BFD2-40DC-BA1C-3E9CF59FDFDB}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.Infrastructure", "AspNetCoreMentoring.Persistance\AspNetCoreMentoring.Infrastructure.csproj", "{B42B2471-0F38-4013-B43D-435775A4AC15}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.Core", "AspNetCoreMentoring.Application\AspNetCoreMentoring.Core.csproj", "{F1887700-26EC-4E61-90E2-EA6C09138F47}"
@@ -25,16 +23,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.API.Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.Notification", "AspNetCoreMentoring.Notification\AspNetCoreMentoring.Notification.csproj", "{D4E25AD4-2F9D-4437-BAE3-61B7621881F2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreMentoring.UI", "AspNetCoreMentoring.UI\AspNetCoreMentoring.UI.csproj", "{CE6F6C20-DA84-4943-935E-4675CB913E34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F4A62984-BFD2-40DC-BA1C-3E9CF59FDFDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4A62984-BFD2-40DC-BA1C-3E9CF59FDFDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4A62984-BFD2-40DC-BA1C-3E9CF59FDFDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4A62984-BFD2-40DC-BA1C-3E9CF59FDFDB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B42B2471-0F38-4013-B43D-435775A4AC15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B42B2471-0F38-4013-B43D-435775A4AC15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B42B2471-0F38-4013-B43D-435775A4AC15}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -73,6 +69,10 @@ Global
 		{D4E25AD4-2F9D-4437-BAE3-61B7621881F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4E25AD4-2F9D-4437-BAE3-61B7621881F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4E25AD4-2F9D-4437-BAE3-61B7621881F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE6F6C20-DA84-4943-935E-4675CB913E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE6F6C20-DA84-4943-935E-4675CB913E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE6F6C20-DA84-4943-935E-4675CB913E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE6F6C20-DA84-4943-935E-4675CB913E34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

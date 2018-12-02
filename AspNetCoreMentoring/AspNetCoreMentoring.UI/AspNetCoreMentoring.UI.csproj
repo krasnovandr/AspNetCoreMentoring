@@ -5,20 +5,11 @@
     <UserSecretsId>7feff8ae-36b5-4529-acd4-4a6f7fa8f1b0</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="wwwroot\lib\NewFolder\**" />
-    <Content Remove="wwwroot\lib\NewFolder\**" />
-    <EmbeddedResource Remove="wwwroot\lib\NewFolder\**" />
-    <None Remove="wwwroot\lib\NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="ApplicationDbContext.cs" />
-    <Compile Remove="ApplicationUser.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
+    <PackageReference Include="BundlerMinifier.Core" Version="2.8.391" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.6" />
@@ -34,8 +25,6 @@
     <None Include="wwwroot\images\banner2.svg" />
     <None Include="wwwroot\images\banner3.svg" />
     <None Include="wwwroot\images\banner4.svg" />
-    <None Include="wwwroot\js\site.js" />
-    <None Include="wwwroot\js\site.min.js" />
     <None Include="wwwroot\lib\bootstrap\dist\.DS_Store" />
     <None Include="wwwroot\lib\bootstrap\dist\css\.DS_Store" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
